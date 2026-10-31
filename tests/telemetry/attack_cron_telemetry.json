@@ -1,0 +1,11 @@
+cat << 'EOF' > tests/telemetry/attack_cron_telemetry.json
+{
+  "event_id": "EVT-8092-ATTACK",
+  "product": "linux",
+  "category": "process_creation",
+  "Image": "/usr/bin/crontab",
+  "CommandLine": "/usr/bin/crontab -e -u root",
+  "User": "attacker_local",
+  "ExpectedResult": "MATCH"
+}
+EOF
