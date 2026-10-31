@@ -1,0 +1,38 @@
+cat << 'EOF' > .github/workflows/detection-gate.yml
+name: Detection Engineering CI
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  test-detection-rules:
+    name: Lint, Transpile & Unit Test Rules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Tooling & Sigma CLI
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Execute Detection Verification Engine
+        run: |
+          python validate_detections.py
+
+      - name: Run Telemetry Unit Tests
+        run: |
+          pytest tests/ -v
+EOF
