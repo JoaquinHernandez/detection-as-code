@@ -1,0 +1,11 @@
+cat << 'EOF' > tests/telemetry/benign_telemetry.json
+{
+  "event_id": "EVT-1002-BENIGN",
+  "product": "linux",
+  "category": "process_creation",
+  "Image": "/usr/bin/crontab",
+  "CommandLine": "/usr/bin/crontab -l -u management-automation-user",
+  "User": "management-automation-user",
+  "ExpectedResult": "SUPPRESS"
+}
+EOF
